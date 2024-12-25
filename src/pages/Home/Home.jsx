@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Home.css'
 import Navbar from '../../components/Navbar/Navbar'
 import hero_banner from '../../assets/hero_banner.jpg'
@@ -8,7 +8,46 @@ import info_icon from '../../assets/info_icon.png'
 import TitleCards from '../../components/TitleCards/TitleCards'
 import Footer from '../../components/Footer/Footer'
 
+let snowOnce = true;
+
 const Home = () => {
+
+    useEffect(() => {
+        const createSnowflakes = (count) => {
+            const body = document.body;
+        
+            for (let i = 0; i < count; i++) {
+              const snowflake = document.createElement('div');
+              const size = Math.random() * 5 + 5; // Random size between 5px and 10px
+              const delay = Math.random() * 5; // Random delay for staggered effect
+              const duration = Math.random() * 5 + 5; // Random fall duration between 5s and 10s
+              const left = Math.random() * window.innerWidth; // Random horizontal start position
+              const direction = Math.random() < 0.5 ? -1 : 1; // Random direction (left or right)
+        
+              snowflake.className = 'snowflake';
+              snowflake.style.width = `${size}px`;
+              snowflake.style.height = `${size}px`;
+              snowflake.style.left = `${left}px`;
+              snowflake.style.animationDuration = `${duration}s`;
+              snowflake.style.animationDelay = `${delay}s`;
+              snowflake.style.setProperty('--direction', direction);
+        
+              body.appendChild(snowflake);
+        
+              // Remove snowflake after it falls to avoid memory issues
+              setTimeout(() => {
+                snowflake.remove();
+              }, (duration + delay) * 1000);
+            }
+          };
+        
+          // Create 50 snowflakes
+          snowOnce && createSnowflakes(50);
+          snowOnce = false;
+          // Keep adding snowflakes at intervals
+          // setInterval(() => createSnowflakes(10), 2000);
+    }, [])
+
     return (
         <div className="home">
             <Navbar />

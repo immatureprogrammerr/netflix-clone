@@ -9,8 +9,9 @@ import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   const navigate = useNavigate();
-  
+
   useEffect(() => {
+    
     onAuthStateChanged(auth, async (user) => {
       if(user) {
         navigate("/")
